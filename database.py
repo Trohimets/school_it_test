@@ -1,6 +1,5 @@
 from databases import Database
 import asyncio
-import asyncpg
 
 
 async def create():

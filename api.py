@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from databases import Database
 import asyncio
-import asyncpg
+
 #uvicorn api:app --reload
 
 database = Database('postgresql://postgres:9785@localhost:5432/postgres')
