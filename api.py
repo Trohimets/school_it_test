@@ -1,9 +1,7 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 from databases import Database
-import asyncio
 
-#uvicorn api:app --reload
 
 database = Database('postgresql://postgres:9785@localhost:5432/postgres')
 
@@ -41,9 +39,15 @@ async def user_filter(gender: str, limit: int):
     return result
 
 
-@app.post("/create/")
+@app.post("/create/") 
 async def user_create(param: Useradd):
     await database.connect()
     query = """insert into users_test (id,name,gender) values (:id, :name,:gender)"""
     values = [{"id": param.id,"name": param.name, "gender": param.gender}]
     await database.execute_many(query=query, values=values)
+    
+    
+if __name__ == '__main__':
+    import uvicorn
+
+    uvicorn.run(app, host='127.0.0.1', port=8000)
