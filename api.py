@@ -6,19 +6,10 @@ from databases import Database
 database = Database('postgresql://postgres:9785@localhost:5432/postgres')
 
 
-class Usergender(BaseModel):
-    gender: str
-    limit: int
-
-
-class Useradd(BaseModel):
+class User(BaseModel):
     id: int
     name: str
     gender: str
-
-
-class Deleteuser(BaseModel):
-    name: str
 
 
 app = FastAPI()
@@ -40,7 +31,7 @@ async def user_filter(gender: str, limit: int):
 
 
 @app.post("/create/") 
-async def user_create(param: Useradd):
+async def user_create(param: User):
     await database.connect()
     query = """insert into users_test (id,name,gender) values (:id, :name,:gender)"""
     values = [{"id": param.id,"name": param.name, "gender": param.gender}]
