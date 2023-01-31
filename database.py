@@ -7,10 +7,11 @@ async def create():
     try:
         await database.connect()
         print('Соединение с БД установлено')
-        create = """create table users_test (id int, name varchar(10), gender varchar(10))"""
-        print('Таблица users_test создана успешно')
+        create = """create table people (id int, 
+        name varchar(10), gender varchar(10))"""
+        print('Таблица people создана успешно')
         await database.execute(query=create)
-        insert = """insert into users_test (id, name, gender) values
+        insert = """insert into people (id, name, gender) values
                     (1,'Александр','Мужской'),
                     (2,'Константин','Мужской'),
                     (3,'Светлана','Женский'),
@@ -19,8 +20,7 @@ async def create():
         await database.execute(query=insert)
         await database.disconnect()
         print('Соединение с БД разорвано')
-
-    except:
-        print('Ошибка подключения к БД')
+    except Exception as e:
+        print(f'Ошибка подключения к БД: {e}')
 
 asyncio.run(create())
